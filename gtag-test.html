@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XWFDSCPRLX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-XWFDSCPRLX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sendEvent(config) {
+      if (typeof ga !== 'undefined') {
+        ga('send', 'event', {
+          eventAction: config.action,
+          eventCategory: config.category,
+          eventLabel: config.label
+        });
+      }
+      if (typeof gtag !== 'undefined') {
+        gtag('event', config.action, {
+          'event_category': config.category,
+          'event_label': config.label
+        });
+      }
+    }
+
+    const playButtonSelector = "[class*='Play__Component-sc']";
+    const pauseButtonSelector = "[class*='Pause__Component-sc']";
+    const trackTitleSelector = "[class*='Bar__Title-sc']";
+    const trackAuthorSelector = "[class*='Bar__Author-sc']";
+
+    const minPlayPauseButtonSelector = "[class*='MinimizePlayerPlayPause__StyledImageContainer-sc']";
+    const minPlayingIconSelector = "[class*='MinimizePlayerPlayPause__StyledIconPlaying-sc']";
+    const minTrackTitleSelector = "[class*='MinimizedPlayer__StyledTitle-sc']";
+    const minTrackAuthorSelector = "[class*='MinimizedPlayer__StyledAuthor-sc']";
+
+    const playlistItemSelector = "[class*='PlaylistItem__PlaylistItemComponent-sc']";
+    const playlistPauseIconSelector = "[class*='PlaylistItem__IconPause-sc']";
+    const playlistTrackTitleSelector = "[class*='PlaylistItem__Title-sc']";
+    const playlistTrackAuthorSelector = "[class*='PlaylistItem__Author-sc']";
+
+    const eventParams = {
+      action: 'click',
+      category: undefined,
+      label: undefined
+    };
+
+    const setParams = (playing, minimized = false, playlist = false, currentPlaylistItem = undefined) => {
+      if (playing) {
+        eventParams.category = 'Elfsight Player Play';
+      } else {
+        eventParams.category = 'Elfsight Player Pause';
+      }
+
+      eventParams.label = getTrackInfo(minimized, playlist, currentPlaylistItem);
+    };
+
+    function getTrackInfo(minimized = false, playlist = false, currentPlaylistItem = undefined) {
+      if (minimized) {
+        return `${document.querySelector(minTrackAuthorSelector)?.title} - ${document.querySelector(minTrackTitleSelector)?.title}`;
+      }
+
+      if (playlist && currentPlaylistItem) {
+        return `${currentPlaylistItem.querySelector(playlistTrackAuthorSelector)?.title} - ${currentPlaylistItem.querySelector(playlistTrackTitleSelector)?.title}`;
+      }
+
+      return `${document.querySelector(trackAuthorSelector)?.title} - ${document.querySelector(trackTitleSelector)?.title}`;
+    }
+
+    async function isMinifiedPlaying() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(!!document.querySelector(minPlayingIconSelector));
+        }, 100);
+      });
+    }
+
+    async function isPlaylistPlaying() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(!!document.querySelector(playlistPauseIconSelector));
+        }, 100);
+      });
+    }
+
+    document.addEventListener('click', async function (e) {
+      const clickedPlay = !!e.target.closest(playButtonSelector);
+      const clickedPause = !!e.target.closest(pauseButtonSelector);
+      const clickedMinifiedPlayPause = !!e.target.closest(minPlayPauseButtonSelector);
+      const clickedPlaylistPlayPause = !!e.target.closest(playlistItemSelector);
+
+      if (!(clickedPlay || clickedPause || clickedMinifiedPlayPause || clickedPlaylistPlayPause)) {
+        return;
+      }
+
+      if (clickedPlay || clickedPause) {
+        setParams(clickedPlay);
+      } else if (clickedMinifiedPlayPause) {
+        const playing = await isMinifiedPlaying();
+        setParams(playing, true);
+      } else {
+        const playlistItem = e.target.closest(playlistItemSelector);
+        const playing = await isPlaylistPlaying();
+        setParams(playing, false, true, playlistItem);
+      }
+
+      if (eventParams.category && eventParams.label) {
+        sendEvent(eventParams);
+      }
+
+      eventParams.label = undefined;
+      eventParams.category = undefined;
+    }, true);
+  </script>
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+  <div class="elfsight-app-fea9cf6f-888a-4fb3-afdf-ea656e8b263f" data-elfsight-app-lazy></div>
+</body>
+
+</html>
