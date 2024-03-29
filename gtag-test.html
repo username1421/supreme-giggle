@@ -23,13 +23,15 @@
         ga('send', 'event', {
           eventAction: config.action,
           eventCategory: config.category,
-          eventLabel: config.label
+          eventLabel: config.label,
+          eventDatetime: new Date()
         });
       }
       if (typeof gtag !== 'undefined') {
         gtag('event', config.action, {
           'event_category': config.category,
-          'event_label': config.label
+          'event_label': config.label,
+          'event_datetime': new Date()
         });
       }
     }
