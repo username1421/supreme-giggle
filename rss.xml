@@ -11,6 +11,18 @@
     <description>New RSS tutorial on W3Schools</description>
     <media:content url="https://i.pravatar.cc/300" height="300" width="300"/>
   </item>
+  <item>
+    <title>Item #2</title>
+    <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+    <description>Lorem ipsum</description>
+    <media:content url="https://i.pravatar.cc/200" height="300" width="300"/>
+  </item>
+  <item>
+    <title>Item #3</title>
+    <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+    <description>dolor sit amet</description>
+    <media:content url="https://i.pravatar.cc/256" height="300" width="300"/>
+  </item>
 </channel>
 
 </rss>
