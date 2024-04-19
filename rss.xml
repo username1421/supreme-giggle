@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+
+<channel>
+  <title>W3Schools Home Page</title>
+  <link>https://www.w3schools.com</link>
+  <description>Free web building tutorials</description>
+  <item>
+    <title>RSS Tutorial</title>
+    <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+    <description>New RSS tutorial on W3Schools</description>
+    <media:content url="https://i.pravatar.cc/300" height="300" width="300"/>
+  </item>
+</channel>
+
+</rss>
