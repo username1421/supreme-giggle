@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      a:visited {
+        color: gray;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+      }
+
+      li::marker {
+        content: "";
+        display: none;
+      }
+
+      li::before {
+        content: url("data:image/png;base64,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");
+        width: 32px;
+        height: 32px;
+        margin-right: 0.5rem;
+      }
+
+      li:has(a:hover)::before {
+        content: url("data:image/png;base64,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");
+      }
+    </style>
+    <title>Test Pages</title>
+  </head>
+  <body>
+    <h1>Test Pages</h1>
+    <ol>
+      <li>
+        <a href="./annbar.html">Announcement Bar</a>
+      </li>
+      <li>
+        <a href="./appboo.html">Appointment Booking</a>
+      </li>
+      <li>
+        <a href="./bactop.html">Back To Top</a>
+      </li>
+      <li>
+        <a href="./banner.html">Banner</a>
+      </li>
+      <li>
+        <a href="./blog.html">Blog</a>
+      </li>
+      <li>
+        <a href="./bushou.html">Business Hours</a>
+      </li>
+      <li>
+        <a href="./button.html">Button</a>
+      </li>
+      <li>
+        <a href="./coocon.html">Cookie Consent</a>
+      </li>
+      <li>
+        <a href="./calcul.html">Calculator</a>
+      </li>
+      <li>
+        <a href="./chats.html">Chats</a>
+      </li>
+      <li>
+        <a href="./filemb.html">File Embed</a>
+      </li>
+      <li>
+        <a href="./flipbo.html">Flipbook</a>
+      </li>
+      <li>
+        <a href="./numcou.html">Number Counter</a>
+      </li>
+      <li>
+        <a href="./poll.html">Poll</a>
+      </li>
+      <li>
+        <a href="./qrcode.html">QR Code</a>
+      </li>
+      <li>
+        <a href="./salnot.html">Sales Notification</a>
+      </li>
+      <li>
+        <a href="./search.html">Search</a>
+      </li>
+      <li>
+        <a href="./spiwhe.html">Spinning Wheel</a>
+      </li>
+      <li>
+        <a href="./stoloc.html">Store Locator</a>
+      </li>
+      <li>
+        <a href="./viscou.html">Visitor Counter</a>
+      </li>
+      <li>
+        <a href="./webtra.html">Website Translator</a>
+      </li>
+    </ol>
+  </body>
+</html>
